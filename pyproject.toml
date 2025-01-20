@@ -1,17 +1,19 @@
-[project]
+[tool.poetry]
 name = "harjoitustyo2048"
 version = "0.1.0"
 description = ""
-authors = [
-    {name = "Tiia Nylén",email = "tiia.nylen@elisa.fi"}
-]
+authors = ["Tiia Nylén <tiia.nylen@elisa.fi>"]
 readme = "README.md"
-requires-python = ">=3.13"
-dependencies = [
-    "matplotlib (>=3.10.0,<4.0.0)",
-    "pytest (>=8.3.4,<9.0.0)"
-]
 
+[tool.poetry.dependencies]
+python = ">=3.13"
+matplotlib = ">=3.10.0,<4.0.0"
+pytest = ">=8.3.4,<9.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+coverage = "^7.6.10"
+pylint = "^3.3.3"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
