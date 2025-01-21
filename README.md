@@ -10,7 +10,7 @@
 [Määrittelydokumentaatio](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/M%C3%A4%C3%A4rittelydokumentaatio.pdf)
 
 
-Coverage raportti mahdollista saada lataamalla projekti ja ajamalla "coverage run --branch -m pytest src; coverage html"
+Coverage raportti mahdollista saada lataamalla projekti ja ajamalla "coverage run --branch -m pytest harjoitustyo2048/; coverage html"
 
 tämän hetkinen tilanne:
 ![image](https://github.com/user-attachments/assets/d2d67759-0a83-49a1-a06a-8000bca549f9)
