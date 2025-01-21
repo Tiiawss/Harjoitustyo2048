@@ -93,7 +93,7 @@ class Game2048:
 
         self.add_new_tile()
         
-        #to do make it clearel at what point the new tile comes
+        
 
     def check_if_game_over(self):
         """Checks if there is either tile 2048 reached or no more spaces left

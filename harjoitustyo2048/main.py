@@ -31,6 +31,7 @@ def run_game():
                 direction = get_random_move()
                 print(f"Random move: {direction}")
                 current_game.make_move(direction)
+                
 
         make_the_matrix(current_game)
         
