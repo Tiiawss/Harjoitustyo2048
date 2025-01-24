@@ -13,11 +13,11 @@
 Coverage raportti mahdollista saada lataamalla projekti ja ajamalla "coverage run --branch -m pytest harjoitustyo2048/; coverage html"
 
 tämän hetkinen tilanne:
-![image](https://github.com/user-attachments/assets/d2d67759-0a83-49a1-a06a-8000bca549f9)
+![image](https://github.com/user-attachments/assets/ae92d85f-7afd-4dfb-ae5a-daf5fdf44056)
+![image](https://github.com/user-attachments/assets/fea4c38b-6af7-4ac5-867b-026cec93b12f)
+![image](https://github.com/user-attachments/assets/53e24071-4e05-43aa-8f16-9765945497ac)
 
-![image](https://github.com/user-attachments/assets/1d2e8351-99b2-409b-9241-b6e7203f59f1)
 
-![image](https://github.com/user-attachments/assets/7779edd4-b758-4c74-b8a9-25a58a5d8d83)
 
 
 pylintin näkee suorittamalla komennon "pylint harjoitustyo2048/"
