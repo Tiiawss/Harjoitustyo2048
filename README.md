@@ -21,4 +21,5 @@ tämän hetkinen tilanne:
 
 
 
-pylintin näkee suorittamalla komennon "pylint harjoitustyo2048/"
+pylintin näkee suorittamalla komennon "poetry run pylint harjoitustyo2048/
+"
