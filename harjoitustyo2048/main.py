@@ -1,23 +1,25 @@
 # main.py
 
+import sys
+import random
 from base_game.game import Game2048
 from ui.visual import make_the_matrix
 from algorithm.minimax import minimax_algorithm
 import pygame
-import sys
-import random
+
 
 def get_random_move():
     """Makes a randomized move to any of four direction in the game
-    
+
     Returns: direction
     """
     return random.choice(["left", "right", "up", "down"])
 
 
 def run_game():
-    """Starts and keeps the 2048 game going the game loop, writes in console what moves are being made
-    
+    """Starts and keeps the 2048 game going the game loop, 
+            writes in console what moves are being made
+
     """
     current_game = Game2048()
     play_turn = 0
@@ -33,21 +35,16 @@ def run_game():
                     direction = get_random_move()
                     print(f"Random move: {direction}")
                     current_game.make_move(direction)
-                    play_turn += 1 
-                    
+                    play_turn += 1
+
                 else:
                     direction = minimax_algorithm(current_game)
                     print(f"Minimax move: {direction}")
                     current_game.make_move(direction)
-                    play_turn += 1 
-
-                    
-               
-                    
-                
+                    play_turn += 1
 
         make_the_matrix(current_game)
-        
+
         pygame.display.flip()
 
     print("Game Over!")

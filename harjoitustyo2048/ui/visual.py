@@ -1,7 +1,7 @@
 # ui/visual.py
 import pygame
 import sys
-from base_game.game import Game2048  
+from base_game.game import Game2048
 import random
 
 font_size = 34
@@ -23,15 +23,16 @@ font = pygame.font.SysFont("Arial", font_size)
 
 def make_the_matrix(game):
     """Makes the games visual side, shows the 4x4 matrix and the tiles to the user
-    
+
     Args: Takes the game it shows as argument"""
-   
+
     ui.fill(background_color)
 
     for row in range(4):
         for colum in range(4):
             tile_value = game.matrix[row][colum]
-            rect = pygame.Rect(colum * cell_size, row * cell_size, cell_size, cell_size)
+            rect = pygame.Rect(colum * cell_size, row *
+                               cell_size, cell_size, cell_size)
             pygame.draw.rect(ui, cell_color, rect)
 
             if tile_value != 0:
@@ -40,4 +41,3 @@ def make_the_matrix(game):
                 ui.blit(text, text_rect)
 
     pygame.display.update()
-
