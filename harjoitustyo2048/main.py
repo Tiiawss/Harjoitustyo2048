@@ -2,6 +2,7 @@
 
 from base_game.game import Game2048
 from ui.visual import make_the_matrix
+from algorithm.minimax import minimax_algorithm
 import pygame
 import sys
 import random
@@ -19,6 +20,7 @@ def run_game():
     
     """
     current_game = Game2048()
+    play_turn = 0
 
     while not current_game.check_if_game_over():
         for event in pygame.event.get():
@@ -27,10 +29,21 @@ def run_game():
                 sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                
-                direction = get_random_move()
-                print(f"Random move: {direction}")
-                current_game.make_move(direction)
+                if play_turn % 2 == 0:
+                    direction = get_random_move()
+                    print(f"Random move: {direction}")
+                    current_game.make_move(direction)
+                    play_turn += 1 
+                    
+                else:
+                    direction = minimax_algorithm(current_game)
+                    print(f"Minimax move: {direction}")
+                    current_game.make_move(direction)
+                    play_turn += 1 
+
+                    
+               
+                    
                 
 
         make_the_matrix(current_game)
