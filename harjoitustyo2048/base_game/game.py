@@ -96,12 +96,10 @@ class Game2048:
         self.add_new_tile()
 
     def check_if_game_over(self):
-        """Checks if there is either tile 2048 reached or no more spaces left
+        """Checks if there is no more spaces left
 
         returns: True if game over, false otherwise
         """
-        if 2048 in self.matrix:
-            return True
         if np.any(self.matrix == 0):
             return False
         for direction in ["left", "right", "up", "down"]:

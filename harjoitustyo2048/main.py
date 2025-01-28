@@ -47,7 +47,9 @@ def run_game():
 
         pygame.display.flip()
 
+    max_tile = current_game.matrix.max()
     print("Game Over!")
+    print("Max tile was:", max_tile)
     pygame.quit()
 
 
