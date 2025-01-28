@@ -3,6 +3,8 @@
 2048 peli
 
 
+
+
 [Viikkoraportti 1](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/Viikkorapotti%201.pdf)
 
 [Viikkoraportti 2](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/Viikkoraportti%202.pdf) tunteja käytetty 10
@@ -23,3 +25,4 @@ tämän hetkinen tilanne:
 
 pylintin näkee suorittamalla komennon "poetry run pylint harjoitustyo2048/
 "
+vinkki hiirellä scrollaamalla voi "speed run" pelin nopeammin kuin kilkkailemalla.
