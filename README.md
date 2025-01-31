@@ -8,6 +8,7 @@
 [Viikkoraportti 1](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/Viikkorapotti%201.pdf)
 
 [Viikkoraportti 2](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/Viikkoraportti%202.pdf) tunteja käytetty 10
+
 [viikkoraportti 3](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/Viikkoraportti%203.pdf)
 
 [testaus dokumentti](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/Testausdokumentti.pdf)
