@@ -38,7 +38,7 @@ def run_game():
                     play_turn += 1
 
                 else:
-                    direction = minimax_algorithm(current_game)
+                    direction = minimax_algorithm(current_game, depth=3, maximizing=True)
                     print(f"Minimax move: {direction}")
                     current_game.make_move(direction)
                     play_turn += 1
