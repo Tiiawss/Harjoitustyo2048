@@ -7,7 +7,19 @@ def board_sitsuation(game: Game2048):
     """Check the board state."""
     return np.count_nonzero(game.matrix)
 
-
+def emptyes(game: Game2048):
+    """Returns a tuple list of empty tiles in the matrix."""
+    
+    empty_spots = []
+    
+    for row in range(4):
+        for col in range(4):
+            if game.matrix[row][col] == 0:
+                empty_spots.append((row, col))
+    
+    return empty_spots
+    
+    
 
 def minimax_algorithm(game: Game2048, depth: int, maximizing: bool):
     """Looks thru all 4 moves in current game and chooses the one that leads to 
@@ -21,17 +33,18 @@ def minimax_algorithm(game: Game2048, depth: int, maximizing: bool):
     Returns:
         str: The "optimal" direction out of the four ('left', 'right', 'up', 'down').
     """
-    """tähän tarkistus jos täysi  kutsu board stistua, muuttuja talteen, jos nolla palauta nolla, muuten minimaxiin  
-    
-    - kuinka syvällä menee täyteen(nyt turha), ota pois float inf, korvaa vaikka 100000 ja -1000000"""
-    if depth == 0 :
-        return None, board_sitsuation(game)
+   
+    tile_sum = board_sitsuation(game)
+    if tile_sum == 16:  
+        return None, 0
+    if depth == 0:
+        return None, tile_sum
 
     directions = ["left", "right", "up", "down"]
     best_move = None
     
     if maximizing:
-        max_eval = float('-inf')
+        max_eval = -1000000
         for direction in directions:
             backup_board = game.matrix.copy()
             game.make_move(direction)
@@ -43,24 +56,30 @@ def minimax_algorithm(game: Game2048, depth: int, maximizing: bool):
                 best_move = direction
         return best_move, max_eval
     else:
-        """vapaiden ruutujen lista, ota funkkarista talteen lista vapaita siirtoja, -> se käy läpi arvot 4,2 esim. kaks siäistä silmukkaa ulommassa arvot 4 ja 2 ja sisemmässä sijainnit
-        minimoija sijoittaa laudalle numerot 
-        voi tarkistaa onko lauta täynnä niin että mikään siirto ei ole mahdollista samalla funkkarilla mikä latsoo mahdolliset siirrot koska jos se palauttaa nolla mahdollisuutta.
         
-        tarvii minimaxin aikana olla tulematta game lokiikasta, vaan oma minimaxin aikana, (ei make move) 
+        min_eval = 1000000
+        empty_positions = emptyes(game)
         
-        katso miten pythonista hypärään kerralla kahdesta silmukasta ulos, palauta tuple lista joka palauttaa 
-        """
-        min_eval = float('inf')
-        for direction in directions:
-            backup_board = game.matrix.copy()
-            game.make_move(direction)
-            _, eval_score = minimax_algorithm(game, depth - 1, True)
-            game.matrix = backup_board
-            
-            if eval_score < min_eval:
-                min_eval = eval_score
-                best_move = direction
-        return best_move, min_eval
+        best_move_min = []
+        
+        for value in [4, 2]:  
+            for row, col in empty_positions:  
+                backup_board = game.matrix.copy()
+                game.matrix[row][col] = value  
+                
+                _, eval_score = minimax_algorithm(game, depth - 1, True)
+                
+                game.matrix = backup_board  
+                
+                if eval_score < min_eval:
+                    min_eval = eval_score
+                    best_move_min = [(row, col, value)]
+                elif eval_score == min_eval:
+                    best_move_min.append((row, col, value))
+                    
+            else:
+                break  
+        
+        return best_move_min, min_eval
 
 
