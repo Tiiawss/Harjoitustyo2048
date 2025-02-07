@@ -21,6 +21,9 @@ def minimax_algorithm(game: Game2048, depth: int, maximizing: bool):
     Returns:
         str: The "optimal" direction out of the four ('left', 'right', 'up', 'down').
     """
+    """tähän tarkistus jos täysi  kutsu board stistua, muuttuja talteen, jos nolla palauta nolla, muuten minimaxiin  
+    
+    - kuinka syvällä menee täyteen(nyt turha), ota pois float inf, korvaa vaikka 100000 ja -1000000"""
     if depth == 0 :
         return None, board_sitsuation(game)
 
@@ -40,6 +43,14 @@ def minimax_algorithm(game: Game2048, depth: int, maximizing: bool):
                 best_move = direction
         return best_move, max_eval
     else:
+        """vapaiden ruutujen lista, ota funkkarista talteen lista vapaita siirtoja, -> se käy läpi arvot 4,2 esim. kaks siäistä silmukkaa ulommassa arvot 4 ja 2 ja sisemmässä sijainnit
+        minimoija sijoittaa laudalle numerot 
+        voi tarkistaa onko lauta täynnä niin että mikään siirto ei ole mahdollista samalla funkkarilla mikä latsoo mahdolliset siirrot koska jos se palauttaa nolla mahdollisuutta.
+        
+        tarvii minimaxin aikana olla tulematta game lokiikasta, vaan oma minimaxin aikana, (ei make move) 
+        
+        katso miten pythonista hypärään kerralla kahdesta silmukasta ulos, palauta tuple lista joka palauttaa 
+        """
         min_eval = float('inf')
         for direction in directions:
             backup_board = game.matrix.copy()
