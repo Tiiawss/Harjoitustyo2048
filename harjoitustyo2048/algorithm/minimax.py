@@ -21,7 +21,7 @@ def emptyes(game: Game2048):
     
     
 
-def minimax_algorithm(game: Game2048, depth: int, maximizing: bool):
+def minimax_algorithm(game: Game2048, depth: int, maximizing: bool, alpha: float, beta: float):
     """Looks thru all 4 moves in current game and chooses the one that leads to 
             least amount of tiles on the board.
 
@@ -29,6 +29,8 @@ def minimax_algorithm(game: Game2048, depth: int, maximizing: bool):
         game (Game2048): The current game state.
         depth: how deep in the minmax tree the algorithm looks
         Maximizing: Boolean on whos turn is it, the maximazer on minimizer
+        alpha: the aplha beta prunings alpha, maximizer best optin thus far
+        beta: the aplha beta prunings alpha, minimizer best optin thus far
 
     Returns:
         str: The "optimal" direction out of the four ('left', 'right', 'up', 'down').
@@ -48,12 +50,16 @@ def minimax_algorithm(game: Game2048, depth: int, maximizing: bool):
         for direction in directions:
             backup_board = game.matrix.copy()
             game.make_move(direction)
-            _, eval_score = minimax_algorithm(game, depth - 1, False)
+            _, eval_score = minimax_algorithm(game, depth - 1, False, alpha, beta)
             game.matrix = backup_board
             
             if eval_score > max_eval:
                 max_eval = eval_score
                 best_move = direction
+                
+            alpha = max(alpha, eval_score)
+            if beta <= alpha:
+                break
         return best_move, max_eval
     else:
         
@@ -67,7 +73,7 @@ def minimax_algorithm(game: Game2048, depth: int, maximizing: bool):
                 backup_board = game.matrix.copy()
                 game.matrix[row][col] = value  
                 
-                _, eval_score = minimax_algorithm(game, depth - 1, True)
+                _, eval_score = minimax_algorithm(game, depth - 1, True, alpha, beta)
                 
                 game.matrix = backup_board  
                 
@@ -76,6 +82,10 @@ def minimax_algorithm(game: Game2048, depth: int, maximizing: bool):
                     best_move_min = [(row, col, value)]
                 elif eval_score == min_eval:
                     best_move_min.append((row, col, value))
+                
+                beta = min(beta, eval_score)
+                if beta <= alpha:
+                    break    
                     
             else:
                 break  

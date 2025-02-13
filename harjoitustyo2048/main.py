@@ -6,6 +6,7 @@ from base_game.game import Game2048
 from ui.visual import make_the_matrix
 from algorithm.minimax import minimax_algorithm
 import pygame
+import numpy as np
 
 
 def get_random_move():
@@ -38,7 +39,10 @@ def run_game():
                     play_turn += 1
 
                 else:
-                    direction = minimax_algorithm(current_game, depth=5, maximizing=True)
+                    
+                    tile_count = np.count_nonzero(current_game.matrix)
+                    depth = max(8, min(4, tile_count + 4)) #change this so that the more tiles there are the the deeper it goes
+                    direction = minimax_algorithm(current_game, depth=depth, maximizing=True, alpha=-1000000, beta=1000000)
                     print(f"Minimax move: {direction}")
                     current_game.make_move(direction)
                     play_turn += 1
