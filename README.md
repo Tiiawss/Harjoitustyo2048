@@ -11,10 +11,12 @@
 
 [viikkoraportti 3](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/Viikkoraportti%203.pdf)
 
-[testaus dokumentti](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/Testausdokumentti.pdf)
 
 [Viikkoraportti 4](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/Viikkoraportti%204.pdf)
 
+[Viikkoraportti 5](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/Viikkoraportti%205.pdf)
+
+[testaus dokumentti](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/Testausdokumentti.pdf)
 
 [Määrittelydokumentaatio](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/M%C3%A4%C3%A4rittelydokumentaatio.pdf)
 
