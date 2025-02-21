@@ -16,7 +16,9 @@
 
 [Viikkoraportti 5](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/Viikkoraportti%205.pdf)
 
-[testaus dokumentti](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/Testausdokumentti.pdf)
+[Viikkoraportti 6](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/Viikkoraportti%206.pdf)
+
+[testaus dokumentti](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/Testausdokumentt1.pdf)
 
 [Määrittelydokumentaatio](https://github.com/Tiiawss/Harjoitustyo2048/blob/main/Dokumentaatio/M%C3%A4%C3%A4rittelydokumentaatio.pdf)
 
