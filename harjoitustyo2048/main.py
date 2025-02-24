@@ -41,13 +41,13 @@ def run_game():
 
                     if tile_count >= 16:
                         depth = 11
-                        max_depth = 6
+                        max_depth = 7
                     elif tile_count >= 8:
-                        depth = 6
-                        max_depth = 6
+                        depth = 5
+                        max_depth = 5
                     else:
-                        depth = 4
-                        max_depth = 4
+                        depth = 3
+                        max_depth = 3
 
                     direction, eval_score = minimax_algorithm(
                         current_game, depth=depth, max_depth=max_depth,
