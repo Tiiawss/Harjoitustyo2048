@@ -5,7 +5,7 @@ from base_game.game import Game2048
 
 def smoothness(game: Game2048):
     """
-      Rates the smoothness of the matrix
+      Rates the smoothness of the matrix, aka how the numbers increase or decrease trhoug the matrix
 
     Args:
         The game board
@@ -13,20 +13,21 @@ def smoothness(game: Game2048):
     returns:
     Score for the smoothness
     """
-    smooth_score = 0
+    board_smoothness = 0
+
     for row in range(4):
         for col in range(4):
-            if game.matrix[row][col] != 0:
-                value = np.log2(game.matrix[row][col])
-
+            current_tile = game.matrix[row][col]
+            if current_tile != 0:
                 if col < 3 and game.matrix[row][col + 1] != 0:
-                    neighbor_value = np.log2(game.matrix[row][col + 1])
-                    smooth_score -= abs(value - neighbor_value)
+                    previus_tile = game.matrix[row][col + 1]
+                    board_smoothness -= abs(current_tile - previus_tile) / max(current_tile, previus_tile)
 
                 if row < 3 and game.matrix[row + 1][col] != 0:
-                    neighbor_value = np.log2(game.matrix[row + 1][col])
-                    smooth_score -= abs(value - neighbor_value)
-    return smooth_score
+                    previus_tile = game.matrix[row + 1][col]
+                    board_smoothness -= abs(current_tile - previus_tile) / max(current_tile, previus_tile)
+
+    return board_smoothness
 
 
 def monotonicity(game: Game2048):
@@ -39,20 +40,23 @@ def monotonicity(game: Game2048):
     returns:
     Score for the monoticity
     """
-    mono_score = 0
+    board_monotonicity = 0
 
     for row in range(4):
         for col in range(3):
-            if game.matrix[row][col] and game.matrix[row][col + 1]:
-                mono_score -= abs(np.log2(game.matrix[row][col]) -
-                                  np.log2(game.matrix[row][col + 1]))
+            current_tile = game.matrix[row][col]
+            next_tile = game.matrix[row][col + 1]
+            if current_tile and next_tile:
+                board_monotonicity -= abs(current_tile - next_tile) / max(current_tile, next_tile)
 
     for col in range(4):
         for row in range(3):
-            if game.matrix[row][col] and game.matrix[row + 1][col]:
-                mono_score -= abs(np.log2(game.matrix[row][col]) -
-                                  np.log2(game.matrix[row + 1][col]))
-    return mono_score
+            current_tile = game.matrix[row][col]
+            next_tile = game.matrix[row + 1][col]
+            if current_tile and next_tile:
+                board_monotonicity -= abs(current_tile - next_tile) / max(current_tile, next_tile)
+
+    return board_monotonicity
 
 
 def board_sitsuation(game: Game2048):
@@ -93,92 +97,83 @@ def minimax_algorithm(
         maximizing: bool,
         alpha: float,
         beta: float):
-    """Looks thru all 4 moves in current game and chooses the one that leads to
-            least amount of tiles on the board.
+    """Looks through all 4 moves in the current game and chooses the one that leads to 
+    the best board state.
 
     Args:
         game (Game2048): The current game state.
-        depth: how deep in the minmax tree the algorithm looks
-        Maximizing: Boolean on whos turn is it, the maximazer on minimizer
-        alpha: the aplha beta prunings alpha, maximizer best optin thus far
-        beta: the aplha beta prunings alpha, minimizer best optin thus far
+        depth (int): Current depth in the minimax tree.
+        max_depth (int): Maximum depth for searching.
+        maximizing (bool): True if it's the maximizing player's turn.
+        alpha (float): Alpha-beta pruning - best maximizer score.
+        beta (float): Alpha-beta pruning - best minimizer score.
 
     Returns:
-        str: The "optimal" direction out of the four ('left', 'right', 'up', 'down').
+        str: The "optimal" move ('left', 'right', 'up', 'down').
     """
 
-    if depth == 0:
+    if depth == 0 or np.count_nonzero(game.matrix) == 16:
         return None, board_sitsuation(game)
 
-    tile_sum = np.count_nonzero(game.matrix)
-    if tile_sum == 16:
-
-        return None, -10000 + (max_depth - depth)
-
     directions = ["left", "right", "up", "down"]
-    best_move = None
 
     if maximizing:
-        max_eval = -10000000
+        best_move = None
+        max_eval = -1000000
         possibilities = []
-        valid_move_found = False
 
+        
         for direction in directions:
-            backup_game = copy.deepcopy(game)
-            game.make_move(direction)
-            if np.array_equal(game.matrix, backup_game.matrix):
-                game = backup_game
+            new_game = Game2048()
+            new_game.matrix = game.matrix.copy()
+            new_game.make_move(direction)
+            
+            if np.array_equal(game.matrix, new_game.matrix):
                 continue
-            valid_move_found = True
-            heuristic_score = board_sitsuation(game)
-            possibilities.append(
-                (direction, copy.deepcopy(game), heuristic_score))
-            game = backup_game
+            
+            h_score = board_sitsuation(new_game)
+            possibilities.append((direction, new_game, h_score))
 
-        if not valid_move_found:
 
+        if not possibilities:
             return None, board_sitsuation(game)
 
-        possibilities.sort(key=lambda x: x[2], reverse=True)
+       
+        possibilities.sort(key=lambda x: x[2])
+        possibilities.reverse()
 
+    
         for direction, state, _ in possibilities:
-            backup_game = copy.deepcopy(game)
-            game = state
-            _, eval_score = minimax_algorithm(
-                game, depth - 1, max_depth, False, alpha, beta)
-            game = backup_game
+            _, eval_score = minimax_algorithm(state, depth - 1, max_depth, False, alpha, beta)
             if eval_score > max_eval:
                 max_eval = eval_score
                 best_move = direction
             alpha = max(alpha, eval_score)
             if beta <= alpha:
-                break
-
-        if best_move is None and possibilities:
-            best_move = possibilities[0][0]
-            max_eval = possibilities[0][2]
+                break 
 
         return best_move, max_eval
 
     else:
-
         min_eval = 1000000
         empty_positions = emptyes(game)
         if not empty_positions:
             return None, board_sitsuation(game)
-        for value in [2, 4]:
-            for row, col in empty_positions:
-                backup_game = copy.deepcopy(game)
-                game.matrix[row][col] = value
-                _, eval_score = minimax_algorithm(
-                    game, depth - 1, max_depth, True, alpha, beta)
-                game = backup_game
+
+    
+        for row, col in empty_positions:
+            for value in [4, 2]:
+                new_game = Game2048()
+                new_game.matrix = game.matrix.copy()
+                new_game.matrix[row][col] = value
+                _, eval_score = minimax_algorithm(new_game, depth - 1, max_depth, True, alpha, beta)
                 if eval_score < min_eval:
                     min_eval = eval_score
                 beta = min(beta, eval_score)
                 if beta <= alpha:
-                    break
-        return None, min_eval
+                    
+                    return None, min_eval
 
+        return None, min_eval
 
 
