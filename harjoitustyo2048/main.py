@@ -39,18 +39,15 @@ def run_game():
                 else:
                     tile_count = np.count_nonzero(current_game.matrix)
 
-                    if tile_count >= 16:
+                    if tile_count >= 15:
                         depth = 11
-                        max_depth = 7
-                    elif tile_count >= 8:
-                        depth = 5
-                        max_depth = 5
+                    elif tile_count >= 11:
+                        depth = 7
                     else:
-                        depth = 3
-                        max_depth = 3
+                        depth = 5
 
                     direction, eval_score = minimax_algorithm(
-                        current_game, depth=depth, max_depth=max_depth,
+                        current_game, depth=depth,
                         maximizing=True, alpha=-1000000, beta=1000000
                     )
                     print(f"Minimax move: ({direction}, {eval_score})")
