@@ -39,8 +39,8 @@ def run_game():
                 else:
                     tile_count = np.count_nonzero(current_game.matrix)
 
-                    if tile_count >= 15:
-                        depth = 11
+                    if tile_count >= 14:
+                        depth = 9
                     elif tile_count >= 11:
                         depth = 7
                     else:
