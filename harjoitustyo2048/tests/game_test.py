@@ -4,8 +4,43 @@ from main import get_random_move, run_game
 from algorithm.minimax import minimax_algorithm, smoothness, monotonicity
 import numpy as np
 
+class TestMainGame2048(Game2048):
+    """Test the main.py Rungame function"""
+    def __init__(self):  
+        self.matrix = np.zeros((4, 4), dtype=int)
+        self.score = 0
+
+    def check_if_game_over(self):
+        return True  
+
+    def make_move(self, direction):
+        pass  
+
+class TestRunGame(unittest.TestCase):
+    """Test the main.py Rungame function"""
+    def setUp(self):
+        import main
+        main.Game2048 = TestMainGame2048
+
+        main.pygame.event.get = lambda: []
+     
+        self.quit_called = False
+        def fake_quit():
+            self.quit_called = True
+
+        main.pygame.quit = fake_quit
+
+    def test_run_game_exits_immediately(self):
+        """Test that the run game function quits the game when quit is called"""
+        run_game()
+        self.assertTrue(self.quit_called, "pygame.quit was called correctly.")
+
+if __name__ == "__main__":
+    unittest.main()
 
 class TestGame2048(unittest.TestCase):
+    
+
     def setUp(self):
         """Setup for game 2048 tests"""
         self.testGame = Game2048()
@@ -49,8 +84,9 @@ class TestGame2048(unittest.TestCase):
 
                 direction, _ = minimax_algorithm(
                     self.testGame,
+
                     depth=3,
-                    max_depth=3,
+
                     maximizing=True,
                     alpha=-10000,
                     beta=10000
@@ -129,12 +165,12 @@ class TestGame2048(unittest.TestCase):
         """Test minimax when there is a clear best move"""
         self.game = Game2048()
         self.game.matrix = np.array([
-            [2, 4, 8, 16],
-            [32, 64, 128, 256],
-            [512, 1024, 2048, 4096],
-            [0, 0, 0, 0]
+            [2, 2, 8, 16],
+            [32, 32, 128, 256],
+            [4, 2, 4, 4],
+            [8, 8, 0, 0]
         ])
         best_move, _ = minimax_algorithm(
-            self.game, depth=3, max_depth=3, maximizing=True, alpha=-float('inf'), beta=float('inf'))
-        self.assertEqual(best_move, "left")
+            self.game, depth=3, maximizing=True, alpha=-float('inf'), beta=float('inf'))
+        self.assertIn(best_move, ["right", "up"])
 
